@@ -7,6 +7,7 @@
 *.synctex.gz
 *.toc
 *.bbl
+build/
 
 ## mac specific
 .DS_Store
