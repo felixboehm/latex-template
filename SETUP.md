@@ -128,13 +128,6 @@ tlmgr --usermode install koma-script tools
 
 Note: The `bigfoot` package provides the `suffix.sty` file required by the acronym package.
 
-### For Full TeX Live Users
-All packages should be included. Verify with:
-```bash
-# Check if packages are available
-tlmgr list --only-installed | grep -E "(biblatex|txfonts|acronym)"
-```
-
 ## 6. Compilation Process
 
 The IUBH template uses biblatex with biber backend, requiring a specific compilation sequence:
@@ -184,42 +177,8 @@ The template is configured to use a `build/` directory for all output files to k
 - `LICENSE` - Apache 2.0 license
 - `README.md` - Basic template information
 
-## 8. Document Customization
 
-### Personal Information
-Edit `001-Titlepage.tex` to update:
-- Student name and matriculation number
-- Study program and semester
-- Thesis/assignment title
-- Advisor name
-- Submission date
-
-### Content Sections
-Enable/disable sections by commenting/uncommenting include statements in `00-Main.tex`:
-
-```latex
-% Optional sections
-%\include{002-BlockingNotice}
-%\include{003-Acknowledgements}
-%\include{004-Abstract}
-
-% Main content
-%\include{010-Intro}        % Enable as needed
-\include{020-Body}          % Main content enabled
-%\include{030-Conclusion}   % Enable as needed
-
-% Optional appendices
-%\include{041-Annexes}
-%\include{042-Glossary}
-```
-
-### Bibliography Style
-The template supports multiple bibliography approaches:
-- **Modern (default)**: biblatex with APA style
-- **Traditional**: BibTeX with custom iubh.bst style
-- **Standard**: BibTeX with standard styles (alpha, plain, etc.)
-
-## 9. Troubleshooting
+## 8. Troubleshooting
 
 ### Common Issues
 
@@ -283,7 +242,7 @@ If Times fonts (txfonts) cause problems:
 ### Encoding Issues
 Ensure your editor saves files in UTF-8 encoding to support international characters.
 
-## 10. Editor Configuration
+## 9. Editor Configuration
 
 ### VS Code with LaTeX Workshop
 1. Install LaTeX Workshop extension
@@ -315,104 +274,3 @@ Ensure your editor saves files in UTF-8 encoding to support international charac
 Configure TeXShop to use biber:
 1. Preferences → Engine → BibTeX Engine: Set to `biber`
 2. Use "Typeset" button for automatic compilation
-
-### Command Line Workflow
-Use the included build script:
-```bash
-# Make executable (one time only)
-chmod +x build.sh
-
-# Build the document
-./build.sh
-```
-
-The build script automatically:
-- Creates the `build/` directory
-- Runs the complete compilation sequence
-- Outputs `build/00-Main.pdf`
-- Reports success and file size
-
-## 11. Template Features
-
-### Academic Formatting
-- KOMA-Script document class for professional layout
-- Proper page numbering (Roman for preliminaries, Arabic for content)
-- Automatic table of contents, list of figures, and list of tables
-- APA-style citations and bibliography
-- Academic title page with university branding
-
-### Advanced Features
-- Acronym management with automatic expansion
-- Cross-referencing for figures, tables, and equations
-- Hyperlinked navigation throughout the document
-- Vector graphics support (PDF, EPS)
-- Code listing capabilities
-- Float barriers for precise layout control
-
-### Customization Options
-- Multiple citation styles (APA, custom IUBH, standard)
-- Flexible section inclusion/exclusion
-- Support for multiple languages
-- Customizable fonts and typography
-- Configurable page layout and margins
-
-## 12. Best Practices
-
-### File Organization
-- Keep content files separate from formatting
-- Use meaningful labels for cross-references
-- Organize images in the `pics/` directory
-- Maintain bibliography in external `.bib` file
-
-### Version Control
-Add to `.gitignore`:
-```
-# Build directory (contains all output files)
-build/
-
-# LaTeX auxiliary files (if building in source directory)
-*.aux
-*.bbl
-*.bcf
-*.blg
-*.fdb_latexmk
-*.fls
-*.log
-*.out
-*.run.xml
-*.synctex.gz
-*.toc
-*.lof
-*.lot
-```
-
-### Quality Assurance
-- Always run spell check before final submission
-- Verify all cross-references resolve correctly
-- Check that all images display properly
-- Validate bibliography entries
-- Review PDF bookmarks and hyperlinks
-
-## 13. Support and Resources
-
-### Official Resources
-- **Template Repository**: https://github.com/IUBH-IT-Technik-Profs-Sandbox/LaTeX-IUBH-Template
-- **IUBH Guidelines**: Check university documentation for specific requirements
-
-### LaTeX Documentation
-- **KOMA-Script Manual**: http://mirrors.ctan.org/macros/latex/contrib/koma-script/doc/scrguien.pdf
-- **Biblatex Manual**: http://mirrors.ctan.org/macros/latex/contrib/biblatex/doc/biblatex.pdf
-- **LaTeX Wikibook**: https://en.wikibooks.org/wiki/LaTeX
-
-### Package Documentation
-Access package documentation with:
-```bash
-texdoc package-name
-# Example: texdoc biblatex
-```
-
-### Getting Help
-1. Check compilation logs (`.log` files) for error details
-2. Search CTAN for package-specific documentation
-3. Consult LaTeX community forums (TeX Stack Exchange)
-4. Review university LaTeX guidelines and examples

@@ -21,6 +21,8 @@ numbers=noendperiod, % Don't add a period at the end of a chapter number
 % get custom bibliography style working without prepending [brackets]
 %\usepackage{natbib}
 %\setcitestyle{aysep={}} % remove comma as delimiter 
+\usepackage[utf8]{inputenc} %UTF-8 to encode many characters => for many characters, you can just input the character and avoid a macro
+\usepackage{csquotes} % Load csquotes before biblatex
 \usepackage[style=apa, backend=biber]{biblatex} % Load biblatex with APA style
 \addbibresource{biblio.bib} % Point to your .bib file
 
@@ -35,6 +37,7 @@ numbers=noendperiod, % Don't add a period at the end of a chapter number
 
 \usepackage{caption}
 \usepackage{float}
+\usepackage{floatbytocbasic}
 
 \setkomafont{chapter}{\Large} 
 \setkomafont{section}{\large}
@@ -48,8 +51,6 @@ numbers=noendperiod, % Don't add a period at the end of a chapter number
 
 \setlength{\parindent}{6pt} % Indent at start of paragraphs  6pt
 
-\usepackage[utf8]{inputenc} %UTF-8 to encode many characters => for many characters, you can just input the character and avoid a macro
-
 \usepackage[english]{babel} % english hyphenations
 %\usepackage[T1]{fontenc} %wichtig für Trennung von Wörtern mit Umlauten
 \usepackage{microtype} % align margins
@@ -62,7 +63,8 @@ numbers=noendperiod, % Don't add a period at the end of a chapter number
 % withpage - the first occurrence's page number is listed too
 \usepackage[withpage]{acronym}
 
-\usepackage[hidelinks]{hyperref} %https://tex.stackexchange.com/questions/823/remove-ugly-borders-around-clickable-cross-references-and-hyperlinks
+\usepackage[hidelinks,hypertexnames=false]{hyperref} %https://tex.stackexchange.com/questions/823/remove-ugly-borders-around-clickable-cross-references-and-hyperlinks
+\usepackage{bookmark}
 
 \begin{document}
 
