@@ -97,14 +97,36 @@ sudo tlmgr update --self
 # Install core packages
 sudo tlmgr install chngcntr scrhack biblatex biber logreq
 sudo tlmgr install txfonts caption float geometry setspace
+sudo tlmgr install floatbytocbasic setspaceenhanced
 sudo tlmgr install microtype graphicx placeins acronym
 sudo tlmgr install hyperref xstring etoolbox url
 sudo tlmgr install babel babel-english inputenc
 
 # Install additional dependencies
-sudo tlmgr install biblatex-apa csquotes
+sudo tlmgr install biblatex-apa csquotes suffix
 sudo tlmgr install koma-script tools
 ```
+
+### User Mode Installation (No sudo required)
+If you don't have admin privileges or prefer user-mode installation:
+
+```bash
+# Initialize user tree
+tlmgr init-usertree
+
+# Install packages in user mode
+tlmgr --usermode install bigfoot
+tlmgr --usermode install chngcntr scrhack biblatex biber logreq
+tlmgr --usermode install txfonts caption float geometry setspace
+tlmgr --usermode install floatbytocbasic setspaceenhanced
+tlmgr --usermode install microtype graphicx placeins acronym
+tlmgr --usermode install hyperref xstring etoolbox url
+tlmgr --usermode install babel babel-english inputenc
+tlmgr --usermode install biblatex-apa csquotes
+tlmgr --usermode install koma-script tools
+```
+
+Note: The `bigfoot` package provides the `suffix.sty` file required by the acronym package.
 
 ### For Full TeX Live Users
 All packages should be included. Verify with:
@@ -122,35 +144,20 @@ The IUBH template uses biblatex with biber backend, requiring a specific compila
 # Navigate to template directory
 cd LaTeX-IUBH-Template/
 
-# Full compilation sequence
-pdflatex 00-Main.tex
-biber 00-Main           # Process bibliography with biber
-pdflatex 00-Main.tex    # Second run for references
-pdflatex 00-Main.tex    # Third run to finalize
+# Compilation with clean build directory
+mkdir -p build
+pdflatex -output-directory=build 00-Main.tex
+biber --output-directory build 00-Main
+pdflatex -output-directory=build 00-Main.tex
+pdflatex -output-directory=build 00-Main.tex
+
 ```
 
-### Alternative with BibTeX (if biber unavailable)
-To use standard BibTeX instead of biber, modify `00-Main.tex`:
-
-1. Comment out biblatex:
-```latex
-%\usepackage[style=apa, backend=biber]{biblatex}
-%\addbibresource{biblio.bib}
-```
-
-2. Uncomment BibTeX lines:
-```latex
-\bibliographystyle{iubh}  % or use iubh.bst
-\bibliography{biblio}
-```
-
-3. Compile with:
-```bash
-pdflatex 00-Main.tex
-bibtex 00-Main
-pdflatex 00-Main.tex
-pdflatex 00-Main.tex
-```
+### Build Directory
+The template is configured to use a `build/` directory for all output files to keep the source directory clean:
+- **PDF output**: `build/00-Main.pdf`
+- **Log files**: `build/00-Main.log`, `build/00-Main.blg`
+- **Auxiliary files**: `build/*.aux`, `build/*.toc`, `build/*.bbl`, etc.
 
 ## 7. Template Structure
 
@@ -310,17 +317,20 @@ Configure TeXShop to use biber:
 2. Use "Typeset" button for automatic compilation
 
 ### Command Line Workflow
-Create a build script:
+Use the included build script:
 ```bash
-#!/bin/bash
-# build.sh
-echo "Compiling IUBH template..."
-pdflatex 00-Main.tex
-biber 00-Main
-pdflatex 00-Main.tex
-pdflatex 00-Main.tex
-echo "Compilation complete: 00-Main.pdf"
+# Make executable (one time only)
+chmod +x build.sh
+
+# Build the document
+./build.sh
 ```
+
+The build script automatically:
+- Creates the `build/` directory
+- Runs the complete compilation sequence
+- Outputs `build/00-Main.pdf`
+- Reports success and file size
 
 ## 11. Template Features
 
@@ -357,6 +367,10 @@ echo "Compilation complete: 00-Main.pdf"
 ### Version Control
 Add to `.gitignore`:
 ```
+# Build directory (contains all output files)
+build/
+
+# LaTeX auxiliary files (if building in source directory)
 *.aux
 *.bbl
 *.bcf
